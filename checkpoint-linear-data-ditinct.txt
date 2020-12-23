@@ -1,0 +1,65 @@
+﻿ALGORITHM somme_distinct_v1
+VAR
+   set1 : ARRAY_OF INTEGER;
+   set2 : ARRAY_OF INTEGER;
+  
+
+   i : INTEGER; 
+   sum : INTEGER := 0;
+   resp: BOOLEAN;
+BEGIN
+// version 1 
+
+FOR i FROM 0 TO set1.length-1 DO
+FOR j FROM 0 TO set2.length-1 DO
+IF (set1[i]==set2[j]) THEN
+break;
+ELSE 
+sum:=sum+set1[i];
+END_IF
+END_FOR
+END_FOR
+
+FOR i FROM 0 TO set2.length-1 DO
+FOR j FROM 0 TO set1.length-1 DO
+IF (set2[i]==set1[j]) THEN
+break;
+ELSE 
+sum:=sum+set1[i];
+END_IF
+END_FOR
+END_FOR
+
+Write("la somme des éléments distincts est",sum);
+
+END
+
+// version2
+ALGORITHM somme_distinct_v2
+VAR
+   set1 : ARRAY_OF INTEGER;
+   set2 : ARRAY_OF INTEGER;
+   i : INTEGER; 
+   sum : INTEGER := 0;
+   htab : HASH_TABLE<INTEGER,INTEGER>;
+BEGIN
+FOR i FROM 0 TO set1.length-1 DO
+htab.insert(i,set1[i]);
+END_FOR
+FOR i FROM set1.length TO set2.length+set1.length-2 DO
+htab.insert(i,set1[i]);
+END_FOR
+FOR i FROM 0 TO htab.length -1 DO
+sum:=sum+htab.get(i);
+FOR j FROM 0 TO htab.length -1 DO
+       IF (htab.get(i)==htab.get(j)) THEN
+       sum:=sum-htab.get(i);
+   END_FOR
+   END_FOR
+
+Write("la somme des éléments distincts est",sum)
+END
+
+
+
+ 
